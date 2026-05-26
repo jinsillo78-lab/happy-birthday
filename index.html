@@ -248,24 +248,28 @@
             </div>
         </section>
 
-        <section id="our-story">
+<section id="our-story">
             <h2 class="section-title">Our Beautiful Memories</h2>
             <p class="narrative">하나하나 버릴 것 없이 전부 소중하고 예쁜 우리들의 기억들.</p>
             
-            <div class="photo-container">
-                <img src="20240111_021948792_iOS.heic" alt="일본에서 함께">
-            </div>
-            
-            <div class="photo-container">
-                <img src="2024-03-13-16-05-30-710.jpg" alt="제주도에서 함께">
-            </div>
-            
-            <div class="photo-container">
-                <img src="20230328_023213628_IOS" alt="동물원에서 함께">
-            </div>
-
-            <div class="photo-container">
-                <img src="1680164125199.jpg" alt="벚꽃길에서 함께">
+            <div class="carousel-container">
+                <div class="carousel-track">
+                    <div class="carousel-slide">
+                        <img src="20240111_021948792_iOS.heic" alt="일본에서 함께">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="2024-03-13-16-05-30-710.jpg" alt="제주도에서 함께">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="20230328_023213628_IOS.jpg" alt="동물원에서 함께">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="1680164125199.jpg" alt="벚꽃길에서 함께">
+                    </div>
+                    </div>
+                
+                <button class="carousel-btn prev-btn" aria-label="이전 사진">◁</button>
+                <button class="carousel-btn next-btn" aria-label="다음 사진">▷</button>
             </div>
         </section>
 
@@ -294,5 +298,44 @@
         </footer>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const track = document.querySelector('#our-story .carousel-track');
+            const slides = Array.from(track.children);
+            const nextBtn = document.querySelector('#our-story .next-btn');
+            const prevBtn = document.querySelector('#our-story .prev-btn');
+            const slideWidth = slides[0].getBoundingClientRect().width;
+            
+            // 슬라이드 위치를 가로로 배열
+            slides.forEach((slide, index) => {
+                slide.style.left = slideWidth * index + 'px';
+            });
+            
+            let currentIndex = 0;
+            const maxIndex = slides.length - 1;
+            
+            // 슬라이드 이동 함수
+            const moveToSlide = (index) => {
+                track.style.transform = `translateX(-${slideWidth * index}px)`;
+                currentIndex = index;
+                updateButtons();
+            };
+            
+            // 버튼 상태 활성/비활성 업데이트
+            const updateButtons = () => {
+                prevBtn.classList.toggle('is-hidden', currentIndex === 0);
+                nextBtn.classList.toggle('is-hidden', currentIndex === maxIndex);
+            };
+            
+            // 버튼 클릭 이벤트
+            nextBtn.addEventListener('click', () => moveToSlide(currentIndex + 1));
+            prevBtn.addEventListener('click', () => moveToSlide(currentIndex - 1));
+            
+            // 초기 버튼 상태 설정
+            updateButtons();
+        });
+    </script>
+</body>
+</html>
 </body>
 </html>
