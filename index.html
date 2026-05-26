@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>사랑하는 지애야, 생일 축하해!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* 기본 리셋 및 변수 설정 */
         *, *::before, *::after {
@@ -143,13 +144,13 @@
             font-weight: 400;
         }
 
-        /* ✨ [고급 디자인 변경] 캐러셀(슬라이드) 시스템 스타일링 */
+        /* 캐러셀(슬라이드) 시스템 스타일링 */
         .carousel-container {
             position: relative;
             width: 100%;
-            max-width: 650px; /* 이미지 슬라이더가 화면에 너무 크지 않도록 균형 유지 */
+            max-width: 650px;
             margin: 40px auto;
-            overflow: hidden; /* 액자 밖 영역은 숨김 */
+            overflow: hidden;
             border-radius: 12px;
             box-shadow: 0 12px 30px rgba(222, 107, 138, 0.2);
             background-color: #fff0f2;
@@ -161,13 +162,13 @@
         }
 
         .carousel-track {
-            display: flex; /* 가로로 나란히 정렬 */
-            transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* 고급스러운 부드러운 감속 모션 */
+            display: flex;
+            transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             width: 100%;
         }
 
         .carousel-slide {
-            flex: 0 0 100%; /* 부모 너비만큼 100%씩 차지 */
+            flex: 0 0 100%;
             width: 100%;
             display: flex;
             align-items: center;
@@ -177,50 +178,64 @@
         .carousel-slide img {
             width: 100%;
             height: auto;
-            max-height: 75vh; /* 세로가 너무 길어져서 깨지는 현상 방지 */
-            object-fit: contain; /* 이미지 원본 비율 완벽 유지 */
+            max-height: 75vh;
+            object-fit: contain;
             display: block;
         }
 
-        /* 세련된 원형 반투명 핑크 화살표 버튼 디자인 */
+        /* ✨ [고급 디자인 변경] 동그랗고 세련된 반투명 핑크 버튼 디자인 */
         .carousel-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 46px;
-            height: 46px;
-            background-color: rgba(255, 235, 238, 0.85);
-            border: 1px solid rgba(222, 107, 138, 0.3);
+            width: 48px;  /* Slightly larger for a premium feel */
+            height: 48px;
+            background-color: rgba(255, 193, 204, 0.7); /* Soft, semi-transparent pink */
+            border: 2px solid rgba(255, 255, 255, 0.6); /* Subtle white border */
             border-radius: 50%;
-            color: #bc4b68;
-            font-size: 16px;
-            font-weight: bold;
+            color: #BE5F72; /* Deeper pink for contrast and romance */
+            font-size: 1.3rem; /* Perfectly sized icon */
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 10;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Professional motion curve */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            user-select: none;
+            -webkit-user-select: none;
         }
 
+        /* ✨ [Update] Icon styling within the button */
+        .carousel-btn i {
+            transition: text-shadow 0.3s ease;
+        }
+
+        /* ✨ [Refinement] Enhanced Hover Interaction */
         .carousel-btn:hover {
-            background-color: #ffe4e8;
-            color: #9c2d49;
-            transform: translateY(-50%) scale(1.05);
+            background-color: rgba(255, 193, 204, 0.9); /* More opaque pink */
+            transform: translateY(-50%) scale(1.08); /* Gently grow in place */
+            color: #9C2D49; /* Darker pink for attention */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+        }
+
+        /* ✨ [New] Glow effect on icon when hover */
+        .carousel-btn:hover i {
+            text-shadow: 0 0 10px rgba(188, 75, 104, 0.5); /* Romantic icon glow */
         }
 
         .prev-btn {
-            left: 15px;
+            left: 20px; /* Space from edge */
         }
 
         .next-btn {
-            right: 15px;
+            right: 20px; /* Space from edge */
         }
 
-        /* 버튼 양 끝에 도달했을 때 투명도 조절로 숨김 처리 */
+        /* 버튼 양 끝 도달 시 숨김 처리 - 부드러운 애니메이션 적용 */
         .carousel-btn.is-hidden {
             opacity: 0;
+            transform: translateY(-50%) scale(0.8); /* Shrink and hide */
             pointer-events: none;
         }
 
@@ -343,8 +358,10 @@
                     </div>
                 </div>
                 
-                <button class="carousel-btn prev-btn" aria-label="이전 사진">이전</button>
-                <button class="carousel-btn next-btn" aria-label="다음 사진">다음</button>
+                <button class="carousel-btn prev-btn" aria-label="이전 사진">
+                    <i class="fas fa-chevron-left"></i> </button>
+                <button class="carousel-btn next-btn" aria-label="다음 사진">
+                    <i class="fas fa-chevron-right"></i> </button>
             </div>
         </section>
 
@@ -383,7 +400,6 @@
             let currentIndex = 0;
             const maxIndex = slides.length - 1;
             
-            // 슬라이더 레이아웃 크기 및 정렬 연산 함수
             const updateSlidePosition = () => {
                 const slideWidth = track.parentElement.getBoundingClientRect().width;
                 slides.forEach((slide) => {
@@ -392,7 +408,6 @@
                 track.style.transform = `translateX(-${slideWidth * currentIndex}px)`;
             };
             
-            // 슬라이드 전환 이동 함수
             const moveToSlide = (index) => {
                 if (index < 0 || index > maxIndex) return;
                 const slideWidth = track.parentElement.getBoundingClientRect().width;
@@ -401,20 +416,16 @@
                 updateButtons();
             };
             
-            // 화살표 활성/비활성 클래스 토글링 
             const updateButtons = () => {
                 prevBtn.classList.toggle('is-hidden', currentIndex === 0);
                 nextBtn.classList.toggle('is-hidden', currentIndex === maxIndex);
             };
             
-            // 버튼 이벤트 리스너 바인딩
             nextBtn.addEventListener('click', () => moveToSlide(currentIndex + 1));
             prevBtn.addEventListener('click', () => moveToSlide(currentIndex - 1));
             
-            // 화면 해상도가 바뀌거나 모바일 폰 회전 시 이미지 너비 자동 조정 대응
             window.addEventListener('resize', updateSlidePosition);
             
-            // 초기 셋업 로딩 실행
             updateSlidePosition();
             updateButtons();
         });
