@@ -143,15 +143,85 @@
             font-weight: 400;
         }
 
-        /* 타임라인 레이아웃 예약 공간 */
-        .next-story-box {
-            border: 2px dashed #fcd1d9;
-            padding: 60px 20px;
-            text-align: center;
-            color: #bfa3a7;
+        /* ✨ [고급 디자인 변경] 캐러셀(슬라이드) 시스템 스타일링 */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px; /* 이미지 슬라이더가 화면에 너무 크지 않도록 균형 유지 */
+            margin: 40px auto;
+            overflow: hidden; /* 액자 밖 영역은 숨김 */
             border-radius: 12px;
-            font-size: 1rem;
-            margin-top: 40px;
+            box-shadow: 0 12px 30px rgba(222, 107, 138, 0.2);
+            background-color: #fff0f2;
+        }
+
+        .carousel-track-wrapper {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex; /* 가로로 나란히 정렬 */
+            transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* 고급스러운 부드러운 감속 모션 */
+            width: 100%;
+        }
+
+        .carousel-slide {
+            flex: 0 0 100%; /* 부모 너비만큼 100%씩 차지 */
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: auto;
+            max-height: 75vh; /* 세로가 너무 길어져서 깨지는 현상 방지 */
+            object-fit: contain; /* 이미지 원본 비율 완벽 유지 */
+            display: block;
+        }
+
+        /* 세련된 원형 반투명 핑크 화살표 버튼 디자인 */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 46px;
+            height: 46px;
+            background-color: rgba(255, 235, 238, 0.85);
+            border: 1px solid rgba(222, 107, 138, 0.3);
+            border-radius: 50%;
+            color: #bc4b68;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .carousel-btn:hover {
+            background-color: #ffe4e8;
+            color: #9c2d49;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .prev-btn {
+            left: 15px;
+        }
+
+        .next-btn {
+            right: 15px;
+        }
+
+        /* 버튼 양 끝에 도달했을 때 투명도 조절로 숨김 처리 */
+        .carousel-btn.is-hidden {
+            opacity: 0;
+            pointer-events: none;
         }
 
         /* 편지 구역 */
@@ -253,23 +323,28 @@
             <p class="narrative">하나하나 버릴 것 없이 전부 소중하고 예쁜 우리들의 기억들.</p>
             
             <div class="carousel-container">
-                <div class="carousel-track">
-                    <div class="carousel-slide">
-                        <img src="20240111_021948792_iOS.heic" alt="일본에서 함께">
+                <div class="carousel-track-wrapper">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="20240125_164550.jpg" alt="안산에서 함께">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="20240301_061851586_iOS.jpg" alt="보령에서 함께">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="2024-03-13-16-05-30-710.jpg" alt="제주도에서 함께">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="20230328_023213628_IOS.jpg" alt="동물원에서 함께">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="1680164125199.jpg" alt="벚꽃길에서 함께">
+                        </div>
                     </div>
-                    <div class="carousel-slide">
-                        <img src="2024-03-13-16-05-30-710.jpg" alt="제주도에서 함께">
-                    </div>
-                    <div class="carousel-slide">
-                        <img src="20230328_023213628_IOS.jpg" alt="동물원에서 함께">
-                    </div>
-                    <div class="carousel-slide">
-                        <img src="1680164125199.jpg" alt="벚꽃길에서 함께">
-                    </div>
-                    </div>
+                </div>
                 
-                <button class="carousel-btn prev-btn" aria-label="이전 사진">◁</button>
-                <button class="carousel-btn next-btn" aria-label="다음 사진">▷</button>
+                <button class="carousel-btn prev-btn" aria-label="이전 사진">이전</button>
+                <button class="carousel-btn next-btn" aria-label="다음 사진">다음</button>
             </div>
         </section>
 
@@ -304,38 +379,45 @@
             const slides = Array.from(track.children);
             const nextBtn = document.querySelector('#our-story .next-btn');
             const prevBtn = document.querySelector('#our-story .prev-btn');
-            const slideWidth = slides[0].getBoundingClientRect().width;
-            
-            // 슬라이드 위치를 가로로 배열
-            slides.forEach((slide, index) => {
-                slide.style.left = slideWidth * index + 'px';
-            });
             
             let currentIndex = 0;
             const maxIndex = slides.length - 1;
             
-            // 슬라이드 이동 함수
+            // 슬라이더 레이아웃 크기 및 정렬 연산 함수
+            const updateSlidePosition = () => {
+                const slideWidth = track.parentElement.getBoundingClientRect().width;
+                slides.forEach((slide) => {
+                    slide.style.width = slideWidth + 'px';
+                });
+                track.style.transform = `translateX(-${slideWidth * currentIndex}px)`;
+            };
+            
+            // 슬라이드 전환 이동 함수
             const moveToSlide = (index) => {
+                if (index < 0 || index > maxIndex) return;
+                const slideWidth = track.parentElement.getBoundingClientRect().width;
                 track.style.transform = `translateX(-${slideWidth * index}px)`;
                 currentIndex = index;
                 updateButtons();
             };
             
-            // 버튼 상태 활성/비활성 업데이트
+            // 화살표 활성/비활성 클래스 토글링 
             const updateButtons = () => {
                 prevBtn.classList.toggle('is-hidden', currentIndex === 0);
                 nextBtn.classList.toggle('is-hidden', currentIndex === maxIndex);
             };
             
-            // 버튼 클릭 이벤트
+            // 버튼 이벤트 리스너 바인딩
             nextBtn.addEventListener('click', () => moveToSlide(currentIndex + 1));
             prevBtn.addEventListener('click', () => moveToSlide(currentIndex - 1));
             
-            // 초기 버튼 상태 설정
+            // 화면 해상도가 바뀌거나 모바일 폰 회전 시 이미지 너비 자동 조정 대응
+            window.addEventListener('resize', updateSlidePosition);
+            
+            // 초기 셋업 로딩 실행
+            updateSlidePosition();
             updateButtons();
         });
     </script>
-</body>
-</html>
 </body>
 </html>
