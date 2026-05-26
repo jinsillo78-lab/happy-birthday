@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사랑하는 여보, 첫 생일을 축하해</title>
+    <style>
+        /* 기본 리셋 및 변수 설정 */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Noto Serif KR', serif;
+            background-color: #fff5f6;
+            color: #4a3e3f;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* 전체 스크롤 페이지 레이아웃 센터링 */
+        .wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 0 40px rgba(254, 180, 196, 0.15);
+        }
+
+        /* 메인 상단 헤더 */
+        header {
+            text-align: center;
+            padding: 120px 20px 100px 20px;
+            background: linear-gradient(to bottom, #ffe4e8, #ffffff);
+        }
+
+        .heart-icon {
+            color: #de6b8a;
+            font-size: 28px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            color: #bc4b68;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #8b6d73;
+            letter-spacing: 1px;
+            margin-bottom: 40px;
+        }
+
+        .date-badge {
+            display: inline-block;
+            padding: 6px 24px;
+            background-color: #fce7ec;
+            color: #bc4b68;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: bold;
+        }
+
+        /* 섹션 공통 스타일 */
+        section {
+            padding: 100px 50px;
+            border-bottom: 1px solid #fbe6e9;
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: #bc4b68;
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 1px;
+            background-color: #de6b8a;
+            margin: 15px auto 0 auto;
+        }
+
+        .narrative {
+            font-size: 1.15rem;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #5a4b4d;
+            word-break: keep-all;
+        }
+
+        /* 이미지 컨테이너 스타일링 (보내주신 실제 이미지 주소 반영) */
+        .photo-container {
+            width: 100%;
+            margin: 40px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(222, 107, 138, 0.15);
+            background-color: #fff0f2;
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .photo-caption {
+            text-align: center;
+            font-size: 0.95rem;
+            color: #8b6d73;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        /* 음악/기타 테마 특별 카드 레이아웃 */
+        .harmony-box {
+            background-color: #fffcfd;
+            border: 1px solid #fce7ec;
+            padding: 40px;
+            border-radius: 12px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .harmony-box h3 {
+            color: #bc4b68;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+
+        /* 타임라인 레이아웃 예약 공간 */
+        .next-story-box {
+            border: 2px dashed #fcd1d9;
+            padding: 60px 20px;
+            text-align: center;
+            color: #bfa3a7;
+            border-radius: 12px;
+            font-size: 1rem;
+            margin-top: 40px;
+        }
+
+        /* 편지 구역 */
+        .letter-section {
+            background-color: #fff9fa;
+            padding: 100px 60px;
+        }
+
+        .letter-paper {
+            background-color: #ffffff;
+            border: 1px solid #fae1e5;
+            padding: 50px 40px;
+            border-radius: 4px;
+            box-shadow: 0 4px 20px rgba(222, 107, 138, 0.05);
+            background-image: linear-gradient(#fdf0f2 1px, transparent 1px);
+            background-size: 100% 36px;
+            line-height: 36px;
+            font-size: 1.15rem;
+            color: #4a3e3f;
+        }
+
+        .letter-content p {
+            margin-bottom: 36px;
+        }
+
+        .letter-signature {
+            text-align: right;
+            margin-top: 60px;
+            font-size: 1.15rem;
+            color: #bc4b68;
+        }
+
+        /* 푸터 */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: #fce7ec;
+            color: #8b6d73;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        /* 부드러운 등장 애니메이션 */
+        .fade-in {
+            animation: fadeInEffect 1.5s ease forwards;
+        }
+
+        @keyframes fadeInEffect {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <header>
+            <span class="heart-icon">♥</span>
+            <h1 class="fade-in">Happy Birthday, My Love</h1>
+            <p class="subtitle fade-in">결혼 후 맞이하는 당신의 첫 번째 생일</p>
+            <div class="date-badge">1997. 05. 27</div>
+        </header>
+
+        <section id="wedding-bride">
+            <h2 class="section-title">The Most Beautiful Bride</h2>
+            <p class="narrative">
+                화사한 분홍빛 드레스가 누구보다 잘 어울렸던 그날의 당신.<br>
+                수줍게 웃던 당신의 모습은 내 평생 잊지 못할 가장 아름다운 장면이야.<br>
+                이 세상에 선물처럼 와준 당신의 29번째 생일을 남편으로서 축하할 수 있어서 참 감사해.
+            </p>
+            
+            <div class="photo-container">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/4305162201758598697" alt="분홍 드레스를 입은 아름다운 아내">
+            </div>
+            <div class="photo-caption">Flower, Pink, and My Beautiful Wife.</div>
+        </section>
+
+        <section id="wedding-harmony">
+            <h2 class="section-title">Harmony of Our Life</h2>
+            <p class="narrative">
+                우리가 함께 마주 보며 웃고, 함께 연주하며 노래하던 순간들.<br>
+                기타의 선율이 서로 어우러지듯, 우리 삶도 언제나 아름다운 화음으로 가득하길 바라.
+            </p>
+            
+            <div class="photo-container">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/7410913086114123983" alt="기타와 함께한 우리들의 결혼식">
+            </div>
+
+            <div class="harmony-box">
+                <h3>당신의 삶이라는 노래에</h3>
+                <p style="color: #6a5a5c; font-size: 1rem; word-break: keep-all;">
+                    내가 항상 가장 든든한 연주자가 되어줄게. 슬플 때나 기쁠 때나 지금처럼 서로를 바라보며 예쁜 화음을 만들어가자. 내 삶의 가장 아름다운 뮤즈, 생일 축하해.
+                </p>
+            </div>
+        </section>
+
+        <section id="our-story">
+            <h2 class="section-title">The Moments We Shared</h2>
+            <p class="narrative">
+                연애 시절 처음 만났던 풋풋한 순간부터, 서로의 마음을 확인하고 <br>
+                마침내 부부가 되어 오늘을 맞이하기까지의 소중한 시간들.
+            </p>
+            
+            <div class="next-story-box">
+                <span style="font-size: 1.5rem; display: block; margin-bottom: 10px;">✨</span>
+                이 아래로 연애 시절 등 만났던 시간들의 사진과 이야기를 <br>보내주시는 대로 차곡차곡 채워드릴게요!
+            </div>
+        </section>
+
+        <section class="letter-section" id="love-letter">
+            <h2 class="section-title">Letter to My Wife</h2>
+            
+            <div class="letter-paper">
+                <div class="letter-content">
+                    <p>사랑하는 여보,</p>
+                    <p>결혼하고 나서 처음으로 함께 맞이하는 당신의 생일이라 그런지 마음이 더 깊어지고 뭉클해지는 것 같아.</p>
+                    <p>1997년 5월 27일, 이 세상에 태어나 주어서 정말 고맙고, 부족함 많은 내 곁에서 가장 든든한 내 편이 되어주고, 나의 소중한 아내가 되어주어서 진심으로 감사해.</p>
+                    <p>당신이 좋아하는 예쁜 분홍빛처럼, 앞으로 당신이 걸어갈 모든 날들이 화사하고 행복한 일들로만 가득할 수 있도록 내가 평생 노력할게. 언제나 당신의 손을 꼭 잡고 걸어가는 남편이 될게.</p>
+                    <p>태어나줘서 고맙고, 내 아내라서 더 고마워. 오늘 세상에서 가장 행복한 하루 보내자.</p>
+                    <p>많이 많이 사랑해, 여보.</p>
+                </div>
+                
+                <div class="letter-signature">
+                    2026년 5월 27일<br>
+                    <strong>당신을 영원히 사랑하는 남편이</strong>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026. Designed with love for my beautiful wife.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
